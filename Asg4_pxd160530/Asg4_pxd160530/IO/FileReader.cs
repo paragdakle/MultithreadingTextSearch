@@ -50,7 +50,7 @@ namespace Asg4_pxd160530.IO
             {
                 try
                 {
-                    stream = new StreamReader(filePath, Encoding.UTF8);
+                    stream = new StreamReader(filePath, Encoding.ASCII);
                     fileSize = new FileInfo(filePath).Length;
                 }
                 catch (IOException e)

@@ -43,6 +43,10 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblEmpty = new System.Windows.Forms.ToolStripStatusLabel();
             this.ctlSearchProgress = new System.Windows.Forms.ToolStripProgressBar();
+            this.ctlSearchIgnoreCase = new System.Windows.Forms.CheckBox();
+            this.ctlClear = new System.Windows.Forms.Button();
+            this.lblPreviewHeader = new System.Windows.Forms.Label();
+            this.ctlResultPreview = new System.Windows.Forms.RichTextBox();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -111,6 +115,7 @@
             this.ctlSearchResultsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colLineNumber,
             this.colSearchMatchLine});
+            this.ctlSearchResultsListView.FullRowSelect = true;
             this.ctlSearchResultsListView.Location = new System.Drawing.Point(17, 83);
             this.ctlSearchResultsListView.MultiSelect = false;
             this.ctlSearchResultsListView.Name = "ctlSearchResultsListView";
@@ -118,6 +123,7 @@
             this.ctlSearchResultsListView.TabIndex = 6;
             this.ctlSearchResultsListView.UseCompatibleStateImageBehavior = false;
             this.ctlSearchResultsListView.View = System.Windows.Forms.View.Details;
+            this.ctlSearchResultsListView.SelectedIndexChanged += new System.EventHandler(this.ctlSearchResultsListView_SelectedIndexChanged);
             // 
             // colLineNumber
             // 
@@ -131,7 +137,8 @@
             // 
             // ctlFileOpenDialog
             // 
-            this.ctlFileOpenDialog.FileName = "openFileDialog1";
+            this.ctlFileOpenDialog.DefaultExt = "\"*.txt\"";
+            this.ctlFileOpenDialog.Filter = "Text files|*.txt";
             // 
             // fileSearchBackgroundWorker
             // 
@@ -154,14 +161,14 @@
             this.ctlSearchProgress});
             this.statusStrip1.Location = new System.Drawing.Point(0, 510);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(700, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(911, 22);
             this.statusStrip1.TabIndex = 7;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // lblEmpty
             // 
             this.lblEmpty.Name = "lblEmpty";
-            this.lblEmpty.Size = new System.Drawing.Size(552, 17);
+            this.lblEmpty.Size = new System.Drawing.Size(794, 17);
             this.lblEmpty.Spring = true;
             // 
             // ctlSearchProgress
@@ -169,11 +176,58 @@
             this.ctlSearchProgress.Name = "ctlSearchProgress";
             this.ctlSearchProgress.Size = new System.Drawing.Size(100, 16);
             // 
+            // ctlSearchIgnoreCase
+            // 
+            this.ctlSearchIgnoreCase.AutoSize = true;
+            this.ctlSearchIgnoreCase.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ctlSearchIgnoreCase.Location = new System.Drawing.Point(701, 52);
+            this.ctlSearchIgnoreCase.Name = "ctlSearchIgnoreCase";
+            this.ctlSearchIgnoreCase.Size = new System.Drawing.Size(96, 20);
+            this.ctlSearchIgnoreCase.TabIndex = 8;
+            this.ctlSearchIgnoreCase.Text = "Match case";
+            this.ctlSearchIgnoreCase.UseVisualStyleBackColor = true;
+            // 
+            // ctlClear
+            // 
+            this.ctlClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ctlClear.Location = new System.Drawing.Point(701, 12);
+            this.ctlClear.Name = "ctlClear";
+            this.ctlClear.Size = new System.Drawing.Size(75, 23);
+            this.ctlClear.TabIndex = 9;
+            this.ctlClear.Text = "Clear";
+            this.ctlClear.UseVisualStyleBackColor = true;
+            this.ctlClear.Click += new System.EventHandler(this.ctlClear_Click);
+            // 
+            // lblPreviewHeader
+            // 
+            this.lblPreviewHeader.AutoSize = true;
+            this.lblPreviewHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPreviewHeader.Location = new System.Drawing.Point(698, 83);
+            this.lblPreviewHeader.Name = "lblPreviewHeader";
+            this.lblPreviewHeader.Size = new System.Drawing.Size(106, 18);
+            this.lblPreviewHeader.TabIndex = 10;
+            this.lblPreviewHeader.Text = "Result Preview";
+            // 
+            // ctlResultPreview
+            // 
+            this.ctlResultPreview.BackColor = System.Drawing.SystemColors.Control;
+            this.ctlResultPreview.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ctlResultPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ctlResultPreview.Location = new System.Drawing.Point(701, 113);
+            this.ctlResultPreview.Name = "ctlResultPreview";
+            this.ctlResultPreview.ReadOnly = true;
+            this.ctlResultPreview.Size = new System.Drawing.Size(198, 390);
+            this.ctlResultPreview.TabIndex = 11;
+            this.ctlResultPreview.Text = "";
+            // 
             // TextSearchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(700, 532);
+            this.ClientSize = new System.Drawing.Size(911, 532);
+            this.Controls.Add(this.lblPreviewHeader);
+            this.Controls.Add(this.ctlClear);
+            this.Controls.Add(this.ctlSearchIgnoreCase);
             this.Controls.Add(this.ctlSearchResultsListView);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.ctlSearch);
@@ -182,6 +236,7 @@
             this.Controls.Add(this.ctlBrowseFile);
             this.Controls.Add(this.ctlFileName);
             this.Controls.Add(this.lblFileName);
+            this.Controls.Add(this.ctlResultPreview);
             this.Name = "TextSearchForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Text Search";
@@ -210,6 +265,10 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel lblEmpty;
         private System.Windows.Forms.ToolStripProgressBar ctlSearchProgress;
+        private System.Windows.Forms.CheckBox ctlSearchIgnoreCase;
+        private System.Windows.Forms.Button ctlClear;
+        private System.Windows.Forms.Label lblPreviewHeader;
+        private System.Windows.Forms.RichTextBox ctlResultPreview;
     }
 }
 

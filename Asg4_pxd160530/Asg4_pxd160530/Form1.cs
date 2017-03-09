@@ -18,6 +18,7 @@ namespace Asg4_pxd160530
         Queue<SearchResult> resultsQueue;
         string searchString;
         const int fileOpenError = -1;
+        StringComparison comparison;
 
         public TextSearchForm()
         {
@@ -31,7 +32,10 @@ namespace Asg4_pxd160530
             ctlFileName.Text = "";
             ctlSearchResultsListView.Items.Clear();
             isSearchOn = false;
+            ctlClear.Enabled = true;
+            ctlSearchIgnoreCase.Enabled = true;
             resultsQueue.Clear();
+            ctlResultPreview.Text = "Select result to preview";
             ctlSearchProgress.Visible = false;
             showMessage("Select file to search");
         }
@@ -91,11 +95,14 @@ namespace Asg4_pxd160530
             {
                 if (!isSearchOn)
                 {
+                    ctlResultPreview.Text = "Select result to preview";
                     ctlSearchResultsListView.Items.Clear();
                     searchString = ctlSearchText.Text;
                     ctlFileName.Enabled = false;
                     ctlSearchText.Enabled = false;
                     ctlBrowseFile.Enabled = false;
+                    ctlClear.Enabled = false;
+                    ctlSearchIgnoreCase.Enabled = false;
                     ctlSearch.Text = "Cancel";
                     showMessage("Starting search...");
                     isSearchOn = true;
@@ -124,6 +131,7 @@ namespace Asg4_pxd160530
                 long bytesRead = 0;
                 int counter = 0;
                 fileSearchBackgroundWorker.ReportProgress(0);
+                comparison = ctlSearchIgnoreCase.Checked ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
                 while (true)
                 {
                     Thread.Sleep(10);
@@ -137,7 +145,8 @@ namespace Asg4_pxd160530
                     counter++;
                     if (fileLine == null) break;
                     bytesRead += fileLine.Length;
-                    if (fileLine.Contains(searchString) || fileLine.Contains(searchString.ToLower()))
+                    fileLine = fileLine.Trim();
+                    if (fileLine.IndexOf(searchString, comparison) >= 0)
                     {
                         resultsQueue.Enqueue(new SearchResult(fileLine, counter));
                     }
@@ -191,8 +200,42 @@ namespace Asg4_pxd160530
             ctlSearchText.Enabled = true;
             ctlBrowseFile.Enabled = true;
             ctlSearch.Enabled = true;
+            ctlClear.Enabled = true;
+            ctlSearchIgnoreCase.Enabled = true;
             ctlSearch.Text = "Search";
             isSearchOn = false;
+        }
+
+        private void ctlClear_Click(object sender, EventArgs e)
+        {
+            initializeForm();
+        }
+
+        private void ctlSearchResultsListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListView.SelectedListViewItemCollection records = ctlSearchResultsListView.SelectedItems;
+            if (records.Count == 0)
+            {
+                ctlResultPreview.Text = "Select result to preview";
+            }
+            foreach (ListViewItem item in records)
+            {
+                ctlResultPreview.Text = item.SubItems[1].Text;
+                styleText();
+            }
+        }
+
+        private void styleText()
+        {
+            int len = searchString.Length;
+            int i = ctlResultPreview.Text.IndexOf(searchString, comparison);
+            while (i >= 0)
+            {
+                ctlResultPreview.Select(i, len);
+                ctlResultPreview.SelectionFont = new Font(ctlResultPreview.SelectionFont, FontStyle.Bold);
+                i = ctlResultPreview.Text.IndexOf(searchString, i + len, comparison);
+            }
+            ctlResultPreview.SelectionLength = 0;
         }
     }
 
