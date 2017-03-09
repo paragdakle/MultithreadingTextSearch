@@ -148,7 +148,10 @@
             // 
             // fileSearchBackgroundWorker
             // 
+            this.fileSearchBackgroundWorker.WorkerReportsProgress = true;
+            this.fileSearchBackgroundWorker.WorkerSupportsCancellation = true;
             this.fileSearchBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.fileSearchBackgroundWorker_DoWork);
+            this.fileSearchBackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.fileSearchBackgroundWorker_ProgressChanged);
             // 
             // TextSearchForm
             // 

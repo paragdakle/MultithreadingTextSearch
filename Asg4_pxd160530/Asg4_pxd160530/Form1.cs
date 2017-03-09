@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -106,8 +107,11 @@ namespace Asg4_pxd160530
             if(reader.openFile())
             {
                 string fileLine = "";
+                int counter = 0;
+
                 while (true)
                 {
+                    Thread.Sleep(100);
                     if (fileSearchBackgroundWorker.CancellationPending)
                     {
                         e.Cancel = true;
@@ -116,9 +120,15 @@ namespace Asg4_pxd160530
                     }
                     fileLine = reader.readFromFile();
                     if (fileLine == null) break;
-                    
+                    fileSearchBackgroundWorker.ReportProgress(++counter);
                 }
+                reader.closeFile();
             }
+        }
+
+        private void fileSearchBackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            showMessage(Convert.ToString(e.ProgressPercentage));
         }
     }
 
