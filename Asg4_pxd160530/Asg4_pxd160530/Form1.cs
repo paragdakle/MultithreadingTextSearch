@@ -17,6 +17,7 @@ namespace Asg4_pxd160530
         bool isSearchOn;
         Queue<SearchResult> resultsQueue;
         string searchString;
+        const int fileOpenError = -1;
 
         public TextSearchForm()
         {
@@ -31,6 +32,8 @@ namespace Asg4_pxd160530
             ctlSearchResultsListView.Items.Clear();
             isSearchOn = false;
             resultsQueue.Clear();
+            ctlSearchProgress.Visible = false;
+            showMessage("Select file to search");
         }
 
         /// <summary>
@@ -45,8 +48,8 @@ namespace Asg4_pxd160530
 
         private void TextSearchForm_Load(object sender, EventArgs e)
         {
-            initializeForm();
             resultsQueue = new Queue<SearchResult>();
+            initializeForm();
         }
 
         private void ctlBrowseFile_Click(object sender, EventArgs e)
@@ -88,11 +91,22 @@ namespace Asg4_pxd160530
             {
                 if (!isSearchOn)
                 {
+                    ctlSearchResultsListView.Items.Clear();
                     searchString = ctlSearchText.Text;
                     ctlFileName.Enabled = false;
                     ctlSearchText.Enabled = false;
+                    ctlBrowseFile.Enabled = false;
+                    ctlSearch.Text = "Cancel";
                     showMessage("Starting search...");
+                    isSearchOn = true;
                     fileSearchBackgroundWorker.RunWorkerAsync();
+                }
+                else
+                {
+                    showMessage("Cancelling Search...");
+                    isSearchOn = false;
+                    ctlSearch.Enabled = false;
+                    fileSearchBackgroundWorker.CancelAsync();
                 }
             }
             else
@@ -107,11 +121,12 @@ namespace Asg4_pxd160530
             if(reader.openFile())
             {
                 string fileLine = "";
+                long bytesRead = 0;
                 int counter = 0;
-
+                fileSearchBackgroundWorker.ReportProgress(0);
                 while (true)
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(10);
                     if (fileSearchBackgroundWorker.CancellationPending)
                     {
                         e.Cancel = true;
@@ -119,22 +134,77 @@ namespace Asg4_pxd160530
                         return;
                     }
                     fileLine = reader.readFromFile();
+                    counter++;
                     if (fileLine == null) break;
-                    fileSearchBackgroundWorker.ReportProgress(++counter);
+                    bytesRead += fileLine.Length;
+                    if (fileLine.Contains(searchString) || fileLine.Contains(searchString.ToLower()))
+                    {
+                        resultsQueue.Enqueue(new SearchResult(fileLine, counter));
+                    }
+                    fileSearchBackgroundWorker.ReportProgress(Convert.ToInt32((bytesRead * 100) / reader.fileSize));
                 }
+                fileSearchBackgroundWorker.ReportProgress(100);
                 reader.closeFile();
+            }
+            else
+            {
+                fileSearchBackgroundWorker.ReportProgress(fileOpenError);
             }
         }
 
         private void fileSearchBackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            showMessage(Convert.ToString(e.ProgressPercentage));
+            if(e.ProgressPercentage == fileOpenError)
+            {
+                showMessage("Error opening file");
+                return;
+            }
+            if(e.ProgressPercentage == 0)
+            {
+                showMessage("Searching...");
+                ctlSearchProgress.Visible = true;
+            }
+            if (resultsQueue.Count > 0)
+            {
+                SearchResult result = resultsQueue.Dequeue();
+                string[] row = { Convert.ToString(result.lineNumber), result.matchLine };
+                var listViewItem = new ListViewItem(row);
+                ctlSearchResultsListView.Items.Add(listViewItem);
+            }
+            ctlSearchProgress.Value = e.ProgressPercentage;
+        }
+
+        private void fileSearchBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            string messagePrefix = isSearchOn ? "Search complete! " : "Search terminated! ";
+            if(ctlSearchResultsListView.Items.Count > 0)
+            {
+                showMessage(messagePrefix + Convert.ToString(ctlSearchResultsListView.Items.Count) + " match(es) found!");
+            }
+            else
+            {
+                showMessage(messagePrefix + "No match found!");
+            }
+            ctlSearchProgress.Value = 0;
+            ctlSearchProgress.Visible = false;
+            ctlFileName.Enabled = true;
+            ctlSearchText.Enabled = true;
+            ctlBrowseFile.Enabled = true;
+            ctlSearch.Enabled = true;
+            ctlSearch.Text = "Search";
+            isSearchOn = false;
         }
     }
 
     class SearchResult
     {
-        string matchLine { get; set; }
-        int lineNumber { get; set; }
+        public string matchLine { get; }
+        public int lineNumber { get; }
+
+        public SearchResult(string line, int lineNumber)
+        {
+            this.matchLine = line;
+            this.lineNumber = lineNumber;
+        }
     }
 }

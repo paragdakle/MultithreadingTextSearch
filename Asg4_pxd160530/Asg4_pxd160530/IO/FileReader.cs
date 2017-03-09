@@ -24,6 +24,8 @@ namespace Asg4_pxd160530.IO
         /// </summary>
         string filePath { get; }
 
+        public long fileSize { get; set; }
+
         StreamReader stream;
 
         /// <summary>
@@ -34,7 +36,8 @@ namespace Asg4_pxd160530.IO
         public FileReader(string filePath)
         {
             this.filePath = filePath;
-            stream = null;
+            this.fileSize = 0;
+            this.stream = null;
         }
 
         /// <summary>
@@ -47,7 +50,8 @@ namespace Asg4_pxd160530.IO
             {
                 try
                 {
-                    stream = new StreamReader(filePath);
+                    stream = new StreamReader(filePath, Encoding.UTF8);
+                    fileSize = new FileInfo(filePath).Length;
                 }
                 catch (IOException e)
                 {
@@ -55,7 +59,10 @@ namespace Asg4_pxd160530.IO
                     stream = null;
                 }
             }
-            Console.Out.WriteLine("Error another file already open");
+            else
+            {
+                Console.Out.WriteLine("Error another file already open");
+            }
             return stream != null;
         }
 

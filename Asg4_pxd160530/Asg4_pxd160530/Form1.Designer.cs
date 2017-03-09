@@ -37,10 +37,12 @@
             this.ctlSearchResultsListView = new System.Windows.Forms.ListView();
             this.colLineNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colSearchMatchLine = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.lblStatusMessage = new System.Windows.Forms.ToolStripStatusLabel();
             this.ctlFileOpenDialog = new System.Windows.Forms.OpenFileDialog();
             this.fileSearchBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.lblStatusMessage = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.lblEmpty = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ctlSearchProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -127,21 +129,6 @@
             this.colSearchMatchLine.Text = "Match line";
             this.colSearchMatchLine.Width = 567;
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblStatusMessage});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 510);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(700, 22);
-            this.statusStrip1.TabIndex = 7;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // lblStatusMessage
-            // 
-            this.lblStatusMessage.Name = "lblStatusMessage";
-            this.lblStatusMessage.Size = new System.Drawing.Size(0, 17);
-            // 
             // ctlFileOpenDialog
             // 
             this.ctlFileOpenDialog.FileName = "openFileDialog1";
@@ -152,6 +139,35 @@
             this.fileSearchBackgroundWorker.WorkerSupportsCancellation = true;
             this.fileSearchBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.fileSearchBackgroundWorker_DoWork);
             this.fileSearchBackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.fileSearchBackgroundWorker_ProgressChanged);
+            this.fileSearchBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.fileSearchBackgroundWorker_RunWorkerCompleted);
+            // 
+            // lblStatusMessage
+            // 
+            this.lblStatusMessage.Name = "lblStatusMessage";
+            this.lblStatusMessage.Size = new System.Drawing.Size(0, 17);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblStatusMessage,
+            this.lblEmpty,
+            this.ctlSearchProgress});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 510);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(700, 22);
+            this.statusStrip1.TabIndex = 7;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // lblEmpty
+            // 
+            this.lblEmpty.Name = "lblEmpty";
+            this.lblEmpty.Size = new System.Drawing.Size(552, 17);
+            this.lblEmpty.Spring = true;
+            // 
+            // ctlSearchProgress
+            // 
+            this.ctlSearchProgress.Name = "ctlSearchProgress";
+            this.ctlSearchProgress.Size = new System.Drawing.Size(100, 16);
             // 
             // TextSearchForm
             // 
@@ -186,12 +202,14 @@
         private System.Windows.Forms.TextBox ctlSearchText;
         private System.Windows.Forms.Label lblSearchFor;
         private System.Windows.Forms.ListView ctlSearchResultsListView;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel lblStatusMessage;
         private System.Windows.Forms.ColumnHeader colLineNumber;
         private System.Windows.Forms.ColumnHeader colSearchMatchLine;
         private System.Windows.Forms.OpenFileDialog ctlFileOpenDialog;
         private System.ComponentModel.BackgroundWorker fileSearchBackgroundWorker;
+        private System.Windows.Forms.ToolStripStatusLabel lblStatusMessage;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel lblEmpty;
+        private System.Windows.Forms.ToolStripProgressBar ctlSearchProgress;
     }
 }
 
