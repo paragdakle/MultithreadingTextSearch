@@ -20,6 +20,7 @@ namespace Asg4_pxd160530.IO
     {
         /// <summary>
         /// filePath: The path of the file, which includes name, to perform read operations on.
+        /// fileSize: The size of the file in bytes.
         /// stream: The StreamReader object.
         /// </summary>
         string filePath { get; }

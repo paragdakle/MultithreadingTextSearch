@@ -54,7 +54,7 @@
             // 
             this.lblFileName.AutoSize = true;
             this.lblFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFileName.Location = new System.Drawing.Point(14, 16);
+            this.lblFileName.Location = new System.Drawing.Point(5, 10);
             this.lblFileName.Name = "lblFileName";
             this.lblFileName.Size = new System.Drawing.Size(70, 16);
             this.lblFileName.TabIndex = 0;
@@ -63,7 +63,7 @@
             // ctlFileName
             // 
             this.ctlFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctlFileName.Location = new System.Drawing.Point(90, 13);
+            this.ctlFileName.Location = new System.Drawing.Point(81, 7);
             this.ctlFileName.Name = "ctlFileName";
             this.ctlFileName.Size = new System.Drawing.Size(506, 22);
             this.ctlFileName.TabIndex = 1;
@@ -72,7 +72,7 @@
             // ctlBrowseFile
             // 
             this.ctlBrowseFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctlBrowseFile.Location = new System.Drawing.Point(607, 12);
+            this.ctlBrowseFile.Location = new System.Drawing.Point(598, 6);
             this.ctlBrowseFile.Name = "ctlBrowseFile";
             this.ctlBrowseFile.Size = new System.Drawing.Size(75, 24);
             this.ctlBrowseFile.TabIndex = 2;
@@ -83,10 +83,10 @@
             // ctlSearch
             // 
             this.ctlSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctlSearch.Location = new System.Drawing.Point(607, 49);
+            this.ctlSearch.Location = new System.Drawing.Point(598, 43);
             this.ctlSearch.Name = "ctlSearch";
             this.ctlSearch.Size = new System.Drawing.Size(75, 24);
-            this.ctlSearch.TabIndex = 5;
+            this.ctlSearch.TabIndex = 4;
             this.ctlSearch.Text = "Search";
             this.ctlSearch.UseVisualStyleBackColor = true;
             this.ctlSearch.Click += new System.EventHandler(this.ctlSearch_Click);
@@ -94,17 +94,17 @@
             // ctlSearchText
             // 
             this.ctlSearchText.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctlSearchText.Location = new System.Drawing.Point(90, 50);
+            this.ctlSearchText.Location = new System.Drawing.Point(81, 44);
             this.ctlSearchText.Name = "ctlSearchText";
             this.ctlSearchText.Size = new System.Drawing.Size(506, 22);
-            this.ctlSearchText.TabIndex = 4;
+            this.ctlSearchText.TabIndex = 3;
             this.ctlSearchText.TextChanged += new System.EventHandler(this.ctlText_TextChanged);
             // 
             // lblSearchFor
             // 
             this.lblSearchFor.AutoSize = true;
             this.lblSearchFor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSearchFor.Location = new System.Drawing.Point(14, 53);
+            this.lblSearchFor.Location = new System.Drawing.Point(5, 47);
             this.lblSearchFor.Name = "lblSearchFor";
             this.lblSearchFor.Size = new System.Drawing.Size(72, 16);
             this.lblSearchFor.TabIndex = 3;
@@ -116,10 +116,10 @@
             this.colLineNumber,
             this.colSearchMatchLine});
             this.ctlSearchResultsListView.FullRowSelect = true;
-            this.ctlSearchResultsListView.Location = new System.Drawing.Point(17, 83);
+            this.ctlSearchResultsListView.Location = new System.Drawing.Point(8, 77);
             this.ctlSearchResultsListView.MultiSelect = false;
             this.ctlSearchResultsListView.Name = "ctlSearchResultsListView";
-            this.ctlSearchResultsListView.Size = new System.Drawing.Size(665, 420);
+            this.ctlSearchResultsListView.Size = new System.Drawing.Size(665, 426);
             this.ctlSearchResultsListView.TabIndex = 6;
             this.ctlSearchResultsListView.UseCompatibleStateImageBehavior = false;
             this.ctlSearchResultsListView.View = System.Windows.Forms.View.Details;
@@ -128,12 +128,12 @@
             // colLineNumber
             // 
             this.colLineNumber.Text = "Line Number";
-            this.colLineNumber.Width = 94;
+            this.colLineNumber.Width = 75;
             // 
             // colSearchMatchLine
             // 
             this.colSearchMatchLine.Text = "Match line";
-            this.colSearchMatchLine.Width = 567;
+            this.colSearchMatchLine.Width = 583;
             // 
             // ctlFileOpenDialog
             // 
@@ -180,20 +180,20 @@
             // 
             this.ctlSearchIgnoreCase.AutoSize = true;
             this.ctlSearchIgnoreCase.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctlSearchIgnoreCase.Location = new System.Drawing.Point(701, 52);
+            this.ctlSearchIgnoreCase.Location = new System.Drawing.Point(685, 46);
             this.ctlSearchIgnoreCase.Name = "ctlSearchIgnoreCase";
             this.ctlSearchIgnoreCase.Size = new System.Drawing.Size(96, 20);
-            this.ctlSearchIgnoreCase.TabIndex = 8;
+            this.ctlSearchIgnoreCase.TabIndex = 5;
             this.ctlSearchIgnoreCase.Text = "Match case";
             this.ctlSearchIgnoreCase.UseVisualStyleBackColor = true;
             // 
             // ctlClear
             // 
             this.ctlClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctlClear.Location = new System.Drawing.Point(701, 12);
+            this.ctlClear.Location = new System.Drawing.Point(685, 6);
             this.ctlClear.Name = "ctlClear";
             this.ctlClear.Size = new System.Drawing.Size(75, 23);
-            this.ctlClear.TabIndex = 9;
+            this.ctlClear.TabIndex = 6;
             this.ctlClear.Text = "Clear";
             this.ctlClear.UseVisualStyleBackColor = true;
             this.ctlClear.Click += new System.EventHandler(this.ctlClear_Click);
@@ -202,7 +202,7 @@
             // 
             this.lblPreviewHeader.AutoSize = true;
             this.lblPreviewHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPreviewHeader.Location = new System.Drawing.Point(698, 83);
+            this.lblPreviewHeader.Location = new System.Drawing.Point(682, 77);
             this.lblPreviewHeader.Name = "lblPreviewHeader";
             this.lblPreviewHeader.Size = new System.Drawing.Size(106, 18);
             this.lblPreviewHeader.TabIndex = 10;
@@ -213,10 +213,10 @@
             this.ctlResultPreview.BackColor = System.Drawing.SystemColors.Control;
             this.ctlResultPreview.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.ctlResultPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctlResultPreview.Location = new System.Drawing.Point(701, 113);
+            this.ctlResultPreview.Location = new System.Drawing.Point(685, 98);
             this.ctlResultPreview.Name = "ctlResultPreview";
             this.ctlResultPreview.ReadOnly = true;
-            this.ctlResultPreview.Size = new System.Drawing.Size(198, 390);
+            this.ctlResultPreview.Size = new System.Drawing.Size(216, 405);
             this.ctlResultPreview.TabIndex = 11;
             this.ctlResultPreview.Text = "";
             // 
